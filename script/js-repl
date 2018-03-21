@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e -u
+
+type rlwrap > /dev/null || echo "Install rlwrap first."
+
+cd "$(dirname $0)/.."
+
+CLJS_JAR="${CLJS_JAR:-/usr/local/Cellar/clojurescript/1.9.946/libexec/cljs.jar}"
+
+# Clean up
+rm -rf out
+
+rlwrap java -cp $CLJS_JAR:cljs:`lein classpath` clojure.main node_repl.clj
