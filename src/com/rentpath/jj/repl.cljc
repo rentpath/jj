@@ -24,9 +24,7 @@
   its behavior of both supporting .unread and collapsing all of CR, LF, and
   CRLF to a single \\newline."
   [s]
-  #_(println "Skip if eol" (java.util.UUID/randomUUID))
   (let [c (.read s)]
-    #_(println "In ze eol loop")
     (cond
       (= c (int \newline)) :line-start
       (= c -1) :stream-end
@@ -104,19 +102,27 @@
     (skip-if-eol *in*)
     input))
 
+(defn repl-eval [x]
+  (if (= x ::ignore)
+    x
+    (jj/eval-jj x)))
+
+(defn repl-print [x]
+  (if (= x ::ignore)
+    (print)
+    (try
+      (println (json/generate-string x {:pretty true}))
+      (catch Exception _
+        (println "Can't JSON encode:" (pr-str x))))))
+
 (defn repl []
-  #_(clojure.main/repl :prompt (fn [] (print "jj> "))
-                       :read   repl-read
-                       :eval   jj/eval-jj
-                       :print  (fn [x] (println (json/generate-string x {:pretty true}))))
   (rebel-readline.core/with-readline-in
     (rebel-readline.clojure.line-reader/create
      (rebel-readline.clojure.service.local/create))
     (clojure.main/repl :prompt (fn [])
                        :read   repl-read
-                       :eval   (fn [x] (if (= x ::ignore) x (jj/eval-jj x)))
-                       :print  (fn [x] (if (= x ::ignore) (print) (try (println (json/generate-string x {:pretty true})) (catch Exception _ (println "Can't JSON encode:" (pr-str x)))))))))
+                       :eval   repl-eval
+                       :print  repl-print)))
 
 (defn -main [& args]
-  (repl)
-  #_(clojure.main/repl :read repl-read))
+  (repl))
