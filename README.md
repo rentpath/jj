@@ -77,6 +77,7 @@ Main libraries used:
 
 ## Todos
 
+- [ ] Testing via ClojureScript
 - [ ] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
 - [ ] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
 
