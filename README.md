@@ -77,8 +77,8 @@ Main libraries used:
 
 ## Todos
 
--[ ] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
--[ ] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
+- [ ] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
+- [ ] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
 
 ## License
 
