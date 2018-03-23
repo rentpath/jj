@@ -4,7 +4,7 @@ Produce JSON. Concisely.
 
 ## Usage
 
-Requirements (one or both):
+System requirements (one or both):
 
 - Java Runtime Environment (JRE)
 - Node.js
@@ -63,11 +63,16 @@ See the `com.rentpath.jj.parser` namespace for jj's grammar. In general:
 
 ## Contributing
 
-Requirements:
+System requirements:
 
 - JDK
 - Node.js
 - Leiningen
+
+To understand the code base:
+
+- Review the scripts under `script/`.
+- Boot up a REPL and take a look at the `com.rentpath.jj` namespace to start.
 
 Main libraries used:
 
