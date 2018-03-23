@@ -16,7 +16,7 @@ Two usage patterns are supported:
 
 _We'd recommend using the Node.js CLI if possible, since it's smaller and faster to execute._
 
-[Download a release]() and try running `./jj query:bool:must:[]` (requires Node.js) or `java -jar jj-repl.jar` (requires JRE).
+[Download a release](https://github.com/rentpath/jj/releases) and try running `./jj query:bool:must:[]` (requires Node.js) or `java -jar jj-repl.jar` (requires JRE).
 
 ## Examples
 
