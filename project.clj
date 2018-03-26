@@ -3,7 +3,7 @@
 (def rebel-readline '[com.bhauman/rebel-readline "0.1.1"])
 (def tools-cli      '[org.clojure/tools.cli "0.3.5"])
 
-(defproject com.rentpath/jj "0.2.0-SNAPSHOT"
+(defproject com.rentpath/jj "0.2.0"
   :description "JSON production"
   :url "https://github.com/rentpath/jj"
   :license {:name "MIT"
