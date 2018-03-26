@@ -75,6 +75,13 @@
       (alter-var-root #'lang/*reserved-symbols* (constantly {}))
       "jj/reserved-symbols:default")
 
+    (str/starts-with? raw-input "parse ")
+    (let [raw-json (subs raw-input 6)
+          str-length (count raw-json)
+          stripped (subs (subs raw-json 1) 0 (- str-length 2))
+          s  (str/replace stripped "\\\"" "\"")]
+      (json/parse-string s))
+
     :else raw-input))
 
 (defn repl-read
@@ -92,7 +99,11 @@
   (let [raw-input (read-entry *in*)
         raw-input (handle-special-input raw-input)
         input (try
-                (let [ret (parse (str @jj-program raw-input))]
+                (let [ret (if (string? raw-input)
+                            (parse (str @jj-program raw-input))
+                            ;; Special forms can return Clojure data at read time,
+                            ;; see handle-special-input
+                            [raw-input])]
                   (reset! jj-program "")
                   ret)
                 (catch Exception e
