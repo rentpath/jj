@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e -u
+
+cd "$(dirname $0)/.."
+
+CLI_ARTIFACT=./out/jj
+REPL_ARTIFACT=./target/uberjar/jj-repl.jar
+RELEASE_DIR=jj-release
+
+lein test
+
+./script/build-uberjar-repl
+./script/build-js-cli
+
+mkdir -p target/$RELEASE_DIR
+cp $CLI_ARTIFACT target/$RELEASE_DIR
+cp $REPL_ARTIFACT target/$RELEASE_DIR
+
+cd target
+
+echo "--- Creating ZIP release archive ---"
+zip -r $RELEASE_DIR $RELEASE_DIR
+
+echo "--- Creating TAR.GZ release archive ---"
+tar czvf $RELEASE_DIR.tar.gz $RELEASE_DIR
+
+echo "Finished. See target/ folder for release archives."

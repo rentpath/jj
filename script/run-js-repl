@@ -2,6 +2,8 @@
 
 set -e -u
 
+cd "$(dirname $0)/.."
+
 type rlwrap > /dev/null || echo "Install rlwrap first."
 
 cd "$(dirname $0)/.."

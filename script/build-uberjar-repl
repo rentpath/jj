@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e -u
+
+cd "$(dirname $0)/.."
+
+echo "--- Building jj REPL uberjar ---"
+lein with-profile +uberjar-repl uberjar
+echo "--- Finsihed building jj REPL uberjar ---"

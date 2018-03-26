@@ -1,5 +1,7 @@
 # jj - Concise JSON Generator (Alpha)
 
+[![Build Status](https://travis-ci.org/rentpath/jj.svg?branch=master)](https://travis-ci.org/rentpath/jj)
+
 Produce JSON. Concisely.
 
 ## Usage

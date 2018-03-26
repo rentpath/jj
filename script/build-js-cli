@@ -7,7 +7,10 @@ cd "$(dirname $0)/.."
 CLJS_JAR="${CLJS_JAR:-/usr/local/Cellar/clojurescript/1.9.946/libexec/cljs.jar}"
 
 # Clean up
-rm -rf out jj.js
+rm -rf out
 
+echo "--- Building jj CLI (on Node.js) ---"
 # Add separate ClojureScript source dir if needed
 java -cp $CLJS_JAR:`lein with-profile +cljs classpath` clojure.main build.clj
+chmod a+x out/jj
+echo "--- Finished building jj CLI (on Node.js) ---"
