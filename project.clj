@@ -9,6 +9,7 @@
   :license {:name "MIT"
             :url "https://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/core.memoize "0.7.1"]
                  #_[org.clojure/spec.alpha "0.1.143"]
                  [instaparse "1.4.8"]
                  #_[cheshire "5.8.0"]]
