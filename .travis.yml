@@ -9,9 +9,8 @@ deploy:
   api_key:
     secure: c3CaLO02cUwafif0SZ3mU0Re9KjU1ZQeGfjHyDe7atEfK0bQ3290GRjPe+9pjImMnzVYEjF+3vrDK5eKT3U3QKdnb+4PUXCKZIQ5HEio/6fQVFSvG1I7VUJEflCzDOeoGyEl9EU7+4w6HRHlpDlU3WtdIyk5gIew2HNMaTorbENPluViAyymY/+fosSDjGxNbA1u1DlfN9nWGjHsV86xS+Rk/GXIEufWdr96+/Dh8eI7G5FE0wIHwZiZN/Ouq8LrQdBFJb7N0xj5wvkDL03k13G4WFROIxdx0hufEk6bcvkABOKi8JFTMgJMQd+u8DUOFgGYwiXkizg5SiXEvfHd+Ugg2BzE616QCShorcby024/Um3exvB2dOz5n6s55c4Ocyl3cTtTKTYKMLGW3OSdmI/ox49R9lrZaSsMrdxiF3p08qJMsEBUUah9p4izRokk/2FJYa2tLzzQWqoLY7rg3Tq4TLdEuUpqjbwVaVRUcxtnCh4Uc9ZF/cZXrJZNSPyjB4GvpN224cmHDtiScU9fuzSkJIC2t8M2T1LYunPEv2g/11lxvSPwo/qTPl+Uk2TsB7hD5DLnH2KSkjFQaGc8jE6VpnPebZhdQDKdJTbKqMWJbd3quqdTdzs9jL/hgZ9E2eccQqwzBqdKDXi+oAO4ulddT0P4YlvEL5wVEMkyjMs=
   file:
-    - "./target/jj-release.tar.gz"
-    - "./target/jj-release.zip"
+    - "target/jj-release.tar.gz"
+    - "target/jj-release.zip"
   on:
     repo: rentpath/jj
     tags: true
-    jdk: openjdk8

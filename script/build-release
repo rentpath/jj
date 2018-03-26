@@ -8,7 +8,7 @@ CLI_ARTIFACT=./out/jj
 REPL_ARTIFACT=./target/uberjar/jj-repl.jar
 RELEASE_DIR=jj-release
 
-lein test
+# Already tested in Travis CI
 
 ./script/build-uberjar-repl
 ./script/build-js-cli
