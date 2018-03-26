@@ -13,10 +13,8 @@ One or both:
 
 Two usage patterns are supported:
 
-- **CLI**: On JVM and Node.js. Pass in jj programs, get back JSON.
-- **REPL**: On JVM. Input jj forms, get back JSON.
-
-_We'd recommend using the Node.js CLI if possible, since it's smaller and faster to execute._
+- **CLI**: Uses Node.js. Pass in jj programs, get back JSON.
+- **REPL**: Uses JVM. Input jj forms, get back JSON.
 
 ## Usage
 
