@@ -6,6 +6,16 @@ cd "$(dirname $0)/.."
 
 CLJS_JAR="${CLJS_JAR:-/usr/local/Cellar/clojurescript/1.9.946/libexec/cljs.jar}"
 
+if [[ -f "$CLJS_JAR" ]]
+then
+    echo "Found ClojureScript JAR locally, proceeding to build."
+else
+    echo "No ClojureScript JAR found. Fetching..."
+    mkdir -p ./target
+    curl -L 'https://github.com/clojure/clojurescript/releases/download/r1.10.238/cljs.jar' -o ./target/cljs.jar
+    CLJS_JAR="./target/cljs.jar"
+fi
+
 # Clean up
 rm -rf out
 
