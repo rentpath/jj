@@ -41,7 +41,7 @@
 
   jjEmptyObject = <'{'> <WS*> <'}'>
 
-  jjArray = <'['> <WS*> (jjValue (<WS*> jjValue)*)? <WS*> <']'>
+  jjArray = <'['> <WS*> (jjValue (<WS*> <','?> jjValue)*)? <WS*> <']'>
 
   WITH = <'#w'>
 
