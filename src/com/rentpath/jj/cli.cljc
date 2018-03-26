@@ -1,27 +1,45 @@
 (ns com.rentpath.jj.cli
   (:require [clojure.string :as str]
+            #?(:clj [clojure.java.io :as io])
+            #?(:cljs [clojure.walk :refer [postwalk]])
             #?(:clj [clojure.tools.cli :refer [parse-opts]])
             #?(:cljs [cljs.tools.cli :refer [parse-opts]])
             [com.rentpath.jj :as jj]
             #?(:cljs [cljs.nodejs :as node])
+            #?(:clj [cheshire.core :as json])
+            #?(:cljs [cognitect.transit :as t])
             [com.rentpath.jj.elasticsearch :as es]
             [com.rentpath.jj.lang :as lang])
   #?(:clj (:gen-class)))
 
+#?(:cljs (def fs (js/require "fs")))
 #?(:cljs (def process (js/require "process")))
 #?(:cljs (node/enable-util-print!))
 #?(:cljs (.on process "uncaughtException" #(js/console.error %)))
+#?(:cljs (defn symbolize-keys
+           "Recursively transforms all map keys from strings to symbols."
+           [m]
+           (let [f (fn [[k v]] (if (string? k) [(symbol k) v] [k v]))]
+             ;; only apply to maps
+             (postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m))))
 
 (def envs
   {:default lang/default-env
    :es es/v6-env
    :elasticsearch es/v6-env})
 
+#?(:clj (defn file-exists? [file-name]
+          (when-let [f (io/as-file file-name)]
+            (.exists f))))
+
+#?(:cljs (defn file-exists? [file-name]
+           (.existsSync fs file-name)))
+
 (def cli-options
   [["-m" "--mode MODE" "Mode to use, adding shortcut symbols to jj."
     :default "default"
-    :parse-fn keyword
-    :validate [#(find envs %) (str "Must be one of: " (pr-str (map name (keys envs))))]]
+    :validate [#(or (find envs (keyword %)) (file-exists? %))
+               (str "Must be a path to a mode JSON file or one of: " (pr-str (map name (keys envs))))]]
    ;; A non-idempotent option
    ;; ["-v" nil "Verbosity level"
    ;;  :id :verbosity
@@ -72,10 +90,28 @@
   #?(:clj (System/exit status)
      :cljs (.exit process status)))
 
+#?(:clj (defn parse-mode-file
+          [file-name]
+          (json/parse-string (slurp file-name) symbol)))
+
+#?(:cljs (defn parse-mode-file
+           [file-name]
+           (let [r (t/reader :json)]
+             (symbolize-keys (t/read r (str (.readFileSync fs file-name {:encoding "utf8"})))))))
+
+(defn determine-mode
+  "Allow user-specified modes via file, allowing them to create custom modes or overridden versions of built-in ones."
+  [mode]
+  (if (file-exists? mode)
+    (parse-mode-file mode)
+    (get envs (keyword mode) lang/default-env)))
+
 (defn -main [& args]
   (let [{:keys [program options exit-message ok?] :as parsed } (validate-args args)
-        mode (get envs (:mode options) lang/default-env)]
-    (assert (map? mode) "The mode must be an environment map of symbols to symbols.")
+        mode (determine-mode (:mode options))]
+    (assert (and (map? mode)
+                 (every? symbol? (keys mode)))
+            (str "The mode must be an environment map of symbols to symbols. Found: " (pr-str mode)))
     (if exit-message
       (exit (if ok? 0 1) exit-message)
       (binding [lang/*env* mode]

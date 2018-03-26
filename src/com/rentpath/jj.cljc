@@ -4,6 +4,7 @@
             [com.rentpath.jj.parser :refer [parse]]
             [com.rentpath.jj.util :refer [deep-merge]]))
 
+;; TODO Consider use of transit-cljs
 #?(:cljs (defn generate-string [obj options] (.stringify js/JSON (clj->js obj) nil 2)))
 
 (defn eval-jj

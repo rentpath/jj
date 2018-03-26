@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rentpath/jj.svg?branch=master)](https://travis-ci.org/rentpath/jj)
 
-Produce JSON. Concisely.
+Produce JSON. Concisely. Particularly helpful for JSON that is deeply nested in multiple places.
 
 ## System Requirements
 
@@ -28,11 +28,34 @@ The release includes a JAR that provides a REPL if you run `java -jar jj-repl.ja
 
 ```
 jj \
-'query:bool:should:[a:query b:query]' \
-'query:bool:must:  [a:query b:query]'
+'a:b:c:d:e' \
+'a:b:c:y:z'
 ```
 
 This will print to stdout:
+
+```json
+{
+  "a": {
+    "b": {
+      "c": {
+        "d": "e",
+        "y": "z"
+      }
+    }
+  }
+}
+```
+
+If you're working with something like Elasticsearch, having shorter symbols for frequently-used parts of the JSON query structure can make it easier to view and internalize large queries. Here's an example using the built-in Elasticsearch mode:
+
+```
+jj -m es \
+'q:b:s:[x:query y:query]' \
+'q:b:m:[z:query]'
+```
+
+Which prints:
 
 ```json
 {
@@ -40,24 +63,40 @@ This will print to stdout:
     "bool": {
       "should": [
         {
-          "a": "query"
+          "x": "query"
         },
         {
-          "b": "query"
+          "y": "query"
         }
       ],
       "must": [
         {
-          "a": "query"
-        },
-        {
-          "b": "query"
+          "z": "query"
         }
       ]
     }
   }
 }
 ```
+
+You can also define your own custom modes:
+
+```
+jj a:alpha,b:beta > custom-mode.json
+jj -m custom-mode.json a:b:c
+```
+
+This will output:
+
+```json
+{
+  "alpha": {
+    "beta": "c"
+  }
+}
+```
+
+You can override built-in modes by putting your custom mode into a file of the same name and passing it to the `-m/--mode` option as shown above.
 
 ### REPL Examples
 
@@ -75,7 +114,7 @@ Special commands include:
 
 ## Syntax
 
-See the `com.rentpath.jj.parser` namespace for jj's grammar. In general:
+See the `com.rentpath.jj.parser` namespace for jj's grammar. Regular JSON is supported, but in addition:
 
 - Double quotes are optional
 - Commas are optional
@@ -103,9 +142,10 @@ Main libraries used:
 ## Todos
 
 - [ ] Testing via ClojureScript
-- [ ] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
+- [x] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
 - [x] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
 - [ ] Fully support multi-line input at REPL
+- [x] Support custom mode file in JSON (show example using jj to create it)
 
 ## License
 

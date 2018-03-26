@@ -20,7 +20,8 @@
                                   ~jackson-jq
                                   ~rebel-readline
                                   ~tools-cli]}
-             :cljs {:dependencies [[cljsjs/nodejs-externs "1.0.4-1"]]}
+             :cljs {:dependencies [[cljsjs/nodejs-externs "1.0.4-1"]
+                                   [com.cognitect/transit-cljs "0.8.243"]]}
              :uberjar-repl {:dependencies [~cheshire
                                            ~jackson-jq
                                            ~rebel-readline]
