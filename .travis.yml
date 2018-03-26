@@ -1,8 +1,7 @@
 language: clojure
 jdk:
 - openjdk8
-script:
-  - lein test
+before_deploy:
   - ./script/build-release
 deploy:
   provider: releases
