@@ -145,7 +145,8 @@ Main libraries used:
 - [x] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
 - [x] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
 - [ ] Fully support multi-line input at REPL
-- [x] Support custom mode file in JSON (show example using jj to create it)
+- [x] Support custom mode file in JSON (show example using jj to create it) in CLI
+- [ ] Support loading custom modes at the REPL
 
 ## License
 
