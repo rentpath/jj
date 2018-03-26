@@ -17,7 +17,7 @@
 (t/deftest test-parse-object
   (t/are
       [s res]
-      (binding [lang/*reserved-symbols* es/v6-reserved-words]
+      (binding [lang/*env* es/v6-env]
         (= res (first (sut/parse s))))
     "__s:3"
     '{__s 3}

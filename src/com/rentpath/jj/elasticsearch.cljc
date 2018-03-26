@@ -1,6 +1,6 @@
 (ns com.rentpath.jj.elasticsearch)
 
-(def v6-reserved-words
+(def v6-env
   {
    '_s '_source
    'a  'aggs

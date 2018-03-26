@@ -1,14 +1,5 @@
 (ns com.rentpath.jj.util)
 
-#?(:cljs (def process (js/require "process")))
-
-(defn handle-args [args]
-  (when (empty? args)
-    (println "Please supply a jj program. For example: a:b")
-    #?(:clj (System/exit 1)
-       :cljs (.exit process 1)))
-  args)
-
 ;; Derived from https://github.com/circleci/frontend/blob/04701bd314731b6e2a75c40085d13471b696c939/src-cljs/frontend/utils.cljs
 (defn deep-merge* [& maps]
   (let [f (fn [old new]

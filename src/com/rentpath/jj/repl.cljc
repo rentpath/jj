@@ -70,18 +70,18 @@
     (= raw-input "jj/reset")
     (do
       (reset! jj-program "")
-      (alter-var-root #'lang/*reserved-symbols* (constantly {}))
+      (alter-var-root #'lang/*env* (constantly {}))
       "jj/reset:true")
 
     (#{"jj/elasticsearch-mode" "jj/es-mode"} raw-input)
     (do
-      (alter-var-root #'lang/*reserved-symbols* (constantly es/v6-reserved-words))
-      "jj/reserved-symbols:elasticsearch")
+      (alter-var-root #'lang/*env* (constantly es/v6-env))
+      "jj/mode:elasticsearch")
 
     (#{"jj/restore-defaults" "jj/default-mode"} raw-input)
     (do
-      (alter-var-root #'lang/*reserved-symbols* (constantly {}))
-      "jj/reserved-symbols:default")
+      (alter-var-root #'lang/*env* (constantly {}))
+      "jj/mode:default")
 
     (str/starts-with? raw-input "def ")
     (read-def raw-input)
@@ -128,7 +128,7 @@
 
 (defn eval-def
   [[_ identifier expression :as arg]]
-  (alter-var-root #'lang/*reserved-symbols* assoc identifier (jj/eval-jj expression)))
+  (alter-var-root #'lang/*env* assoc identifier (jj/eval-jj expression)))
 
 (defn eval-jq [x]
   (let [[jj-json jq-query] (split-with (partial not= 'jq) x)

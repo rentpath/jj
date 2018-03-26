@@ -1,3 +1,5 @@
 (ns com.rentpath.jj.lang)
 
-(def ^:dynamic *reserved-symbols* {})
+(def default-env {})
+
+(def ^:dynamic *env* {})

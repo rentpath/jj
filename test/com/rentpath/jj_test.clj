@@ -12,7 +12,7 @@
 (t/deftest test-deep-merge-for-multi-jj-programs
   (t/are
       [s res]
-      (binding [lang/*reserved-symbols* es/v6-reserved-words]
+      (binding [lang/*env* es/v6-env]
         (= res (sut/jj s)))
     "q:b:m:[gd:d:\"30mi\"] q:b:s:[gs:bs:10]"
     '{query {bool {must [{geo_distance {distance "30mi"}}]

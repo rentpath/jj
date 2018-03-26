@@ -124,7 +124,7 @@
 (defn parse-symbol
   [[tag str]]
   (let [sym (symbol (str/trim str))]
-    (get lang/*reserved-symbols* sym sym)))
+    (get lang/*env* sym sym)))
 
 (defn parse-array
   [[tag & things]]
