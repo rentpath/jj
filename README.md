@@ -4,9 +4,9 @@
 
 Produce JSON. Concisely.
 
-## Usage
+## System Requirements
 
-System requirements (one or both):
+One or both:
 
 - Java Runtime Environment (JRE)
 - Node.js
@@ -18,7 +18,13 @@ Two usage patterns are supported:
 
 _We'd recommend using the Node.js CLI if possible, since it's smaller and faster to execute._
 
-[Download a release](https://github.com/rentpath/jj/releases) and try running `./jj query:bool:must:[]` (requires Node.js) or `java -jar jj-repl.jar` (requires JRE).
+## Usage
+
+- [Download a release](https://github.com/rentpath/jj/releases)
+- Put `jj` on your PATH.
+- Try examples below.
+
+The release includes a JAR that provides a REPL if you run `java -jar jj-repl.jar` at the command-line.
 
 ## Examples
 
