@@ -2,7 +2,7 @@
 (def cheshire       '[cheshire "5.8.0"])
 (def tools-cli      '[org.clojure/tools.cli "0.3.5"])
 
-(defproject com.rentpath/jj "0.1.0-SNAPSHOT"
+(defproject com.rentpath/jj "0.1.0"
   :description "JSON production"
   :url "https://github.com/rentpath/jj"
   :license {:name "MIT"
