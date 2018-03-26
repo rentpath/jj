@@ -24,7 +24,7 @@ Two usage patterns are supported:
 
 The release includes a JAR that provides a REPL if you run `java -jar jj-repl.jar` at the command-line.
 
-## Examples
+### CLI Examples
 
 ```
 jj \
@@ -59,6 +59,19 @@ This will print to stdout:
 }
 ```
 
+### REPL Examples
+
+The REPL provides readline capabilities and maintains a history of commands.
+
+Special commands include:
+
+- `jj/quit` -- Quits the REPL process. You can also press `Ctrl-D`.
+- `jj/reset` -- Resets the REPL state. If you're entering things but nothing is printing, try this.
+- `def base a:b:c:d:e` -- Assigns the symbol `base` the JSON value produced by `a:b:c:d:e`. You can then use `base` in subsequent expressions, e.g., `base a:b:y:z` to add a `"y": "z"` entry to your objectf at key `b`.
+- `jj/es-mode` or `jj/elasticsearch-mode` -- Assigns short symbols for common Elasticsearch JSON keys. See [this namespace](https://github.com/rentpath/jj/blob/master/src/com/rentpath/jj/elasticsearch.cljc) for details.
+
+**If the REPL gets into a weird state,** enter `jj/reset` and everything should be fine again. This will also remove anything you have assigned via `def`.
+
 ## Syntax
 
 See the `com.rentpath.jj.parser` namespace for jj's grammar. In general:
@@ -90,7 +103,7 @@ Main libraries used:
 
 - [ ] Testing via ClojureScript
 - [ ] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
-- [ ] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
+- [x] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
 
 ## License
 

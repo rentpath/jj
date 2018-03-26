@@ -48,6 +48,14 @@
       :else
       (recur (.read s) (str output (char c))))))
 
+(defn read-def
+  [raw-input]
+  (let [sans-def (str/triml (subs raw-input 4))
+        [identifier expression] (->> sans-def
+                                     (split-with #(not (or (Character/isWhitespace %) (= % \,))))
+                                     (map (partial apply str)))]
+    [:jj/def (symbol identifier) (parse expression)]))
+
 (def jj-program (atom ""))
 
 (defn handle-special-input
@@ -74,6 +82,9 @@
     (do
       (alter-var-root #'lang/*reserved-symbols* (constantly {}))
       "jj/reserved-symbols:default")
+
+    (str/starts-with? raw-input "def ")
+    (read-def raw-input)
 
     (str/starts-with? raw-input "parse ")
     (let [raw-json (subs raw-input 6)
@@ -115,6 +126,10 @@
     (skip-if-eol *in*)
     input))
 
+(defn eval-def
+  [[_ identifier expression :as arg]]
+  (alter-var-root #'lang/*reserved-symbols* assoc identifier (jj/eval-jj expression)))
+
 (defn eval-jq [x]
   (let [[jj-json jq-query] (split-with (partial not= 'jq) x)
         jq-query (first (next jq-query))]
@@ -126,6 +141,8 @@
     (try
       (cond
         (some #{'jq} x) (eval-jq x)
+        (and (coll? (first x))
+             (= (ffirst x) :jj/def)) (eval-def (first x))
         :else (jj/eval-jj x))
       (catch Exception e
         (.printStackTrace e)
