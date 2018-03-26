@@ -5,10 +5,12 @@
             [rebel-readline.clojure.service.local]
             [rebel-readline.tools :as tools]
             [com.rentpath.jj :as jj]
+            [com.rentpath.jj.jq :as jq]
             [com.rentpath.jj.lang :as lang]
             [com.rentpath.jj.parser :refer [parse]]
             [com.rentpath.jj.elasticsearch :as es]
-            [cheshire.core :as json])
+            [cheshire.core :as json]
+            [clojure.string :as str])
   (:gen-class))
 
 (defmethod tools/-prompt :rebel-readline.clojure.line-reader/clojure [service]
@@ -102,10 +104,21 @@
     (skip-if-eol *in*)
     input))
 
+(defn eval-jq [x]
+  (let [[jj-json jq-query] (split-with (partial not= 'jq) x)
+        jq-query (first (next jq-query))]
+    (first (jq/jq (jj/eval-jj jj-json) jq-query))))
+
 (defn repl-eval [x]
   (if (= x ::ignore)
     x
-    (jj/eval-jj x)))
+    (try
+      (cond
+        (some #{'jq} x) (eval-jq x)
+        :else (jj/eval-jj x))
+      (catch Exception e
+        (.printStackTrace e)
+        (throw e)))))
 
 (defn repl-print [x]
   (if (= x ::ignore)

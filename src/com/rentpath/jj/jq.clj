@@ -7,7 +7,7 @@
 
 (defonce object-mapper (ObjectMapper.))
 
-(defn read-tree* [json-string]
+(defn read-tree* [^String json-string]
   (.readTree object-mapper json-string))
 
 (def
@@ -26,7 +26,7 @@
   (fifo jq-compile* :fifo/threshold 1000))
 
 (defn jq-apply-query*
-  [json-string jq-query-string]
+  [^String json-string ^String jq-query-string]
   (let [node (read-tree json-string)
         query (jq-compile jq-query-string)]
     (mapv (comp json/parse-string str) (.apply query node))))
