@@ -135,7 +135,7 @@ This will output:
 
 You can override built-in modes by putting your custom mode into a file of the same name and passing it to the `-m/--mode` option as shown above.
 
-### REPL Examples
+### REPL
 
 The REPL provides readline capabilities and maintains a history of commands.
 
@@ -148,6 +148,86 @@ Special commands include:
 - `ids:[1,2,3,4] jq ".ids"` -- Execute a jq query (via [jackson-jq](https://github.com/eiiches/jackson-jq)) of `.ids` against the JSON produced by `ids:[1,2,3,4]`, returning `[1,2,3,4]`.
 
 **If the REPL gets into a weird state,** enter `jj/reset` and everything should be fine again. This will also remove anything you have assigned via `def`.
+
+See sections below for more detailed explanations of these REPL features.
+
+#### `jj/es-mode` or `jj/elasticsearch-mode`
+
+Like most programming languages, jj keeps track of an environment where symbols/names map to values. The `jj/es-mode` or equivalent `jj/elasticsearch-mode` command adds several names to this environment that equate things like `q` with `query` and `b` with `bool`.
+
+Use `def` to add your own mappings to this environment.
+
+#### `def`
+
+Adds a symbol/name to jj's environment so that you can use that name in place of its value. This needn't be limited to simple values, a `def` can assign an entire JSON object to a symbol.
+
+```
+jj=> def biggie a:b:c:d
+{
+  "biggie" : {
+    "a" : {
+      "b" : {
+        "c" : "d"
+      }
+    }
+  }
+}
+jj=> x:y:biggie
+{
+  "x" : {
+    "y" : {
+      "a" : {
+        "b" : {
+          "c" : "d"
+        }
+      }
+    }
+  }
+}
+```
+
+You'll notice that when you use `def`, the value returned is jj's entire environment:
+
+```
+jj=> def a 42
+{
+  "a" : 42
+}
+jj=> def b "beta"
+{
+  "a" : 42,
+  "b" : "beta"
+}
+jj=> def c no-quotes-needed
+{
+  "a" : 42,
+  "b" : "beta",
+  "c" : "no-quotes-needed"
+}
+```
+
+#### `jq` queries
+
+[jq](https://stedolan.github.io/jq/) is a lightweight, performant, and feature-rich query and transformation tool for JSON.
+
+If you're using jj's CLI, I'd recommend you use the standard jq CLI tool in combination with jj.
+
+If you're using the REPL, jj's REPL incorporates access to a JVM port of jq called [jackson-jq](https://github.com/eiiches/jackson-jq). You can use this at the REPL to query into the JSON that your jj programs generate.
+
+Example session with a tiny sampling of what jq is capable of:
+
+```
+jj=> ids:[1 2 3 4] jq ".ids"
+[ 1, 2, 3, 4 ]
+jj=> ids:[1 2 3 4] jq ".ids | length"
+4
+jj=> ids:[1 2 3 4] jq ".ids | length * 2"
+8
+jj=> ids:[1 2 3 4] jq ".ids | map ( . * 3 )"
+[ 3, 6, 9, 12 ]
+jj=> a:b:c:d:answer jq ".a.b.c.d"
+"answer"
+```
 
 ## Syntax
 
