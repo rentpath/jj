@@ -143,12 +143,12 @@ Main libraries used:
 
 - [ ] Rust implementation for CLI.
 - [ ] Testing via ClojureScript
-- [x] Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)
-- [x] Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience
+- [x] ~~Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)~~
+- [x] ~~Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience~~
 - [ ] Fully support multi-line input at REPL
-- [x] Support custom mode file in JSON (show example using jj to create it) in CLI
-- [ ] Support loading custom modes at the REPL
-- [x] Support stdin of JSON via CLI
+- [x] ~~Support custom mode file in JSON (show example using jj to create it) in CLI~~
+- [x] ~~Support loading custom modes at the REPL~~
+- [x] ~~Support stdin of JSON via CLI~~
 - [ ] Support reading a file of JSON in via REPL
 
 ## License
