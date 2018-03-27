@@ -90,7 +90,9 @@
     (let [raw-json (subs raw-input 6)
           str-length (count raw-json)
           stripped (subs (subs raw-json 1) 0 (- str-length 2))
-          s  (str/replace stripped "\\\"" "\"")]
+          s  (if (str/starts-with? stripped "http")
+               (slurp stripped)
+               (str/replace stripped "\\\"" "\""))]
       (json/parse-string s))
 
     :else raw-input))
