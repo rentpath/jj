@@ -13,3 +13,4 @@ pom.xml.asc
 # ClojureScript
 /main.js
 /out
+.cpcache

@@ -13,6 +13,7 @@
   #?(:clj (:gen-class)))
 
 #?(:cljs (def fs (js/require "fs")))
+#?(:cljs (def readline (js/require "readline")))
 #?(:cljs (def process (js/require "process")))
 #?(:cljs (node/enable-util-print!))
 #?(:cljs (.on process "uncaughtException" #(js/console.error %)))
@@ -85,10 +86,13 @@
       :else
       {:program (str/join " " arguments) :options options})))
 
-(defn exit [status msg]
-  (println msg)
-  #?(:clj (System/exit status)
-     :cljs (.exit process status)))
+(defn exit
+  ([status] (exit status nil))
+  ([status msg]
+   (when msg
+     (println msg))
+   #?(:clj (System/exit status)
+      :cljs (.exit process status))))
 
 #?(:clj (defn parse-mode-file
           [file-name]
@@ -106,6 +110,32 @@
     (parse-mode-file mode)
     (get envs (keyword mode) lang/default-env)))
 
+#?(:cljs (def lines (atom [])))
+
+#?(:clj (defn use-stdin [mode]
+          (when-let [stdin (slurp *in*)]
+            (binding [lang/*env* mode]
+              (jj/pj stdin)
+              (exit 0)))))
+
+#?(:cljs (defn use-stdin [mode]
+           (let [rl (.createInterface
+                     readline
+                     (clj->js
+                      {:input (.-stdin process)
+                       :output (.-stdout process)
+                       :terminal false}))]
+             (.on rl "line"
+                  (fn [line]
+                    (swap! lines conj line)))
+             (.on rl "close"
+                  (fn [& args]
+                    (when-let [lines (seq @lines)]
+                      (do
+                        (binding [lang/*env* mode]
+                          (jj/pj (str/join " " lines)))
+                        (exit 0))))))))
+
 (defn -main [& args]
   (let [{:keys [program options exit-message ok?] :as parsed } (validate-args args)
         mode (determine-mode (:mode options))]
@@ -114,7 +144,11 @@
             (str "The mode must be an environment map of symbols to symbols. Found: " (pr-str mode)))
     (if exit-message
       (exit (if ok? 0 1) exit-message)
-      (binding [lang/*env* mode]
-        (jj/pj program)))))
+      (if (= "-"
+           #?(:clj (str/trim program)
+              :cljs (.trim program)))
+        (use-stdin mode)
+        (binding [lang/*env* mode]
+          (jj/pj program))))))
 
 #?(:cljs (set! *main-cli-fn* -main))
