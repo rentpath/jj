@@ -34,5 +34,6 @@
                      "-m" "es" ::stdin "a:b:c")
     (test-main-input {:aggs {:bool "c"}}
                      "-m" "elasticsearch" ::stdin "a:b:c")
-    (test-main-input {:aggs {:bool "c"}}
-                     "--mode" "elasticsearch" ::stdin "a:b:c")))
+    (test-main-input {:aggs {:bool {:c "distance"
+                                    :y "z"}}}
+                     "--mode" "elasticsearch" "a:b:y:z" ::stdin "a:b:c:d")))

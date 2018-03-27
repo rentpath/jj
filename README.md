@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rentpath/jj.svg?branch=master)](https://travis-ci.org/rentpath/jj)
 
-Produce JSON. Concisely. Particularly helpful for JSON that is deeply nested in multiple places.
+Produce JSON. Concisely. Particularly helpful for JSON that is deeply nested.
 
 ## System Requirements
 
@@ -24,7 +24,7 @@ Two usage patterns are supported:
 
 The release includes a JAR that provides a REPL if you run `java -jar jj-repl.jar` at the command-line.
 
-### CLI Examples
+### CLI
 
 ```
 jj \
@@ -46,6 +46,43 @@ This will print to stdout:
   }
 }
 ```
+
+You can also pass in programs via stdin, placing `-` where you want the input from stdin to be evaluated:
+
+```
+echo "x:y:z" | jj -
+```
+
+Prints:
+
+```json
+{
+  "x": {
+    "y": "z"
+  }
+}
+```
+
+More advanced usage:
+
+```
+echo "a:b:x:new" | jj "a:b:x:old" - "a:b:c:d"
+```
+
+Prints:
+
+```json
+{
+  "a": {
+    "b": {
+      "x": "new",
+      "c": "d"
+    }
+  }
+}
+```
+
+#### Modes
 
 If you're working with something like Elasticsearch, having shorter symbols for frequently-used parts of the JSON query structure can make it easier to view and internalize large queries. Here's an example using the built-in Elasticsearch mode:
 

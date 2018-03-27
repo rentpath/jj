@@ -84,7 +84,7 @@
 
       ;; custom validation on arguments
       :else
-      {:program (str/join " " arguments) :options options})))
+      {:program arguments :options options})))
 
 (defn exit
   ([status] (exit status nil))
@@ -112,13 +112,18 @@
 
 #?(:cljs (def lines (atom [])))
 
-#?(:clj (defn use-stdin [mode]
-          (when-let [stdin (slurp *in*)]
-            (binding [lang/*env* mode]
-              (jj/pj stdin)
-              (exit 0)))))
+(defn thread-stdin
+  [stdin program]
+  (str/join " " (map #(get {"-" stdin} % %) program)))
 
-#?(:cljs (defn use-stdin [mode]
+#?(:clj (defn use-stdin [mode program]
+          (if-let [stdin (slurp *in*)]
+            (binding [lang/*env* mode]
+              (jj/pj (thread-stdin stdin program))
+              (exit 0)))
+          (str/join " " program)))
+
+#?(:cljs (defn use-stdin [mode program]
            (let [rl (.createInterface
                      readline
                      (clj->js
@@ -133,7 +138,7 @@
                     (when-let [lines (seq @lines)]
                       (do
                         (binding [lang/*env* mode]
-                          (jj/pj (str/join " " lines)))
+                          (jj/pj (thread-stdin (str/join " " lines) program)))
                         (exit 0))))))))
 
 (defn -main [& args]
@@ -144,11 +149,8 @@
             (str "The mode must be an environment map of symbols to symbols. Found: " (pr-str mode)))
     (if exit-message
       (exit (if ok? 0 1) exit-message)
-      (if (= "-"
-           #?(:clj (str/trim program)
-              :cljs (.trim program)))
-        (use-stdin mode)
+      (if (some #{"-"} program)
+        (use-stdin mode program)
         (binding [lang/*env* mode]
-          (jj/pj program))))))
-
+          (jj/pj (str/join " " program)))))))
 #?(:cljs (set! *main-cli-fn* -main))
