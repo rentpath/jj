@@ -1,0 +1,8 @@
+
+#!/bin/bash
+
+set -e -u
+
+cd "$(dirname $0)/.."
+
+clojure -Sdeps "{:deps {com.bhauman/rebel-readline {:mvn/version \"0.1.1\"}}}" -m rebel-readline.main

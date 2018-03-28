@@ -147,7 +147,9 @@ Special commands include:
 - `def base a:b:c:d:e` -- Assigns the symbol `base` the JSON value produced by `a:b:c:d:e`. You can then use `base` in subsequent expressions, e.g., `base a:b:y:z` to add a `"y": "z"` entry to your object at key `b`.
 - `ids:[1,2,3,4] jq ".ids"` -- Execute a jq query (via [jackson-jq](https://github.com/eiiches/jackson-jq)) of `.ids` against the JSON produced by `ids:[1,2,3,4]`, returning `[1,2,3,4]`.
 
-**If the REPL gets into a weird state,** enter `jj/reset` and everything should be fine again. This will also remove anything you have assigned via `def`.
+**If the REPL gets into a weird state,** enter `jj/reset` and everything should be fine again. This will also remove anything you have assigned via `def**.
+
+**Caution:** The jj REPL leverages rebel-readline naively at this point. Despite autocompletion and syntax highlighting for Clojure forms, the jj REPL will not do what you expect with Clojure forms. It supports only jj forms and the special commands described here.
 
 See sections below for more detailed explanations of these REPL features.
 
@@ -256,20 +258,20 @@ Main libraries used:
 - [rebel-readline](https://github.com/bhauman/rebel-readline)
 - [cheshire](https://github.com/dakrone/cheshire)
 
-### REPLs
+### Clojure and ClojureScript REPLs
 
 **Clojure**
 
-Editor/IDE integration of your choice or use Clojure's CLI tools directly (here with [rebel-readline](https://github.com/bhauman/rebel-readline) added):
+Editor/IDE integration of your choice or use Clojure's CLI tools via this script:
 
 ```
-clojure -Sdeps "{:deps {com.bhauman/rebel-readline {:mvn/version \"0.1.1\"}}}" -m rebel-readline.main
+./script/repl
 ```
 
 **ClojureScript**
 
 ```
-clj -A:cljs -m cljs.main -re node
+./script/repl-cljs
 ```
 
 ### Tests
@@ -277,13 +279,13 @@ clj -A:cljs -m cljs.main -re node
 **Clojure**
 
 ```
-clj -A:test
+./script/test
 ```
 
 **ClojureScript***
 
 ```
-clj -A:cljs:cljs-test
+./script/test-cljs
 ```
 
 ## Todos

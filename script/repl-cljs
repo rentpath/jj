@@ -1,0 +1,8 @@
+
+#!/bin/bash
+
+set -e -u
+
+cd "$(dirname $0)/.."
+
+clj -A:cljs -m cljs.main -re node
