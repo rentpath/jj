@@ -256,6 +256,20 @@ Main libraries used:
 - [rebel-readline](https://github.com/bhauman/rebel-readline)
 - [cheshire](https://github.com/dakrone/cheshire)
 
+### Tests
+
+Clojure:
+
+```
+clj -A:clj:test
+```
+
+ClojureScript:
+
+```
+clj -A:cljs:cljs-test
+```
+
 ## Todos
 
 - [ ] Rust implementation for CLI.

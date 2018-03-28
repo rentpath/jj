@@ -153,4 +153,5 @@
         (use-stdin mode program)
         (binding [lang/*env* mode]
           (jj/pj (str/join " " program)))))))
+
 #?(:cljs (set! *main-cli-fn* -main))
