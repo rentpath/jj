@@ -298,7 +298,7 @@ Editor/IDE integration of your choice or use Clojure's CLI tools via this script
 - [x] ~~Support custom mode file in JSON (show example using jj to create it) in CLI~~
 - [x] ~~Support loading custom modes at the REPL~~
 - [x] ~~Support stdin of JSON via CLI~~
-- [ ] Support reading a file of JSON in via REPL
+- [x] ~~Support reading a file of JSON in via REPL~~
 
 ## License
 
