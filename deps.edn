@@ -1,9 +1,9 @@
 {:deps {org.clojure/clojure {:mvn/version "1.9.0"}
         #_{:git/url "http://github.com/clojure/clojure"
            :sha "841fa60b41bc74367fb16ec65d025ea5bde7a617"}
-        org.clojure/core.memoize #_{:mvn/version "0.7.1"}
-        {:git/url "http://github.com/clojure/core.memoize"
-         :sha "32d9957724e629222a1037b9048692c72d571085"}
+        org.clojure/core.memoize {:mvn/version "0.7.1"}
+        #_{:git/url "http://github.com/clojure/core.memoize"
+           :sha "32d9957724e629222a1037b9048692c72d571085"}
         instaparse {:mvn/version "1.4.8"}
         #_{:git/url "https://github.com/Engelberg/instaparse"
            :sha "60a70404bc6fb91ec7b048502847d73420533ecd"}}
@@ -30,4 +30,5 @@
   :test {:extra-paths ["test"]
          :extra-deps {com.cognitect/test-runner {:git/url "http://github.com/cognitect-labs/test-runner.git"
                                                  :sha "5fb4fc46ad0bf2e0ce45eba5b9117a2e89166479"}}
-         :main-opts ["-m" "cognitect.test-runner"]}}}
+         :main-opts ["-m" "cognitect.test-runner"]}
+  :uberjar {:extra-paths ["target/custom"]}}}
