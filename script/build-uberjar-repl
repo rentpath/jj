@@ -23,8 +23,10 @@ done
 echo "Compiling main Clojure namespace to a Java class..."
 clojure -A:uberjar -e "(binding [*compile-path* \"target/custom/classes\"] (compile 'com.rentpath.jj.repl))"
 
-echo "Creating executable JAR file..."
-cd target/custom/classes
-jar cvfe ../jj-repl.jar com.rentpath.jj.repl * > /dev/null
+UBERJAR_NAME=jj-repl.jar
+TARGET_DIR=target/custom
+echo "Creating executable JAR file at $TARGET_DIR/$UBERJAR_NAME ..."
+cd $TARGET_DIR/classes
+jar cvfe ../$UBERJAR_NAME com.rentpath.jj.repl * > /dev/null
 cd ../../..
 echo "--- Finished building jj REPL uberjar ---"
