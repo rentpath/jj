@@ -299,6 +299,7 @@ Editor/IDE integration of your choice or use Clojure's CLI tools via this script
 - [x] ~~Support loading custom modes at the REPL~~
 - [x] ~~Support stdin of JSON via CLI~~
 - [x] ~~Support reading a file of JSON in via REPL~~
+- [ ] Put together cookbook file with helpful idioms, e.g., appending to arrays.
 
 ## License
 
