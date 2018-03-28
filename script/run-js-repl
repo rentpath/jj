@@ -13,4 +13,4 @@ CLJS_JAR="${CLJS_JAR:-/usr/local/Cellar/clojurescript/1.9.946/libexec/cljs.jar}"
 # Clean up
 rm -rf out
 
-rlwrap java -cp $CLJS_JAR:cljs:`lein classpath` clojure.main node_repl.clj
+rlwrap java -cp $CLJS_JAR:cljs:`clojure -A:cljs -Spath` clojure.main node_repl.clj

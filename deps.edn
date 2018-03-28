@@ -1,25 +1,13 @@
 {:deps {org.clojure/clojure {:mvn/version "1.9.0"}
-        #_{:git/url "http://github.com/clojure/clojure"
-           :sha "841fa60b41bc74367fb16ec65d025ea5bde7a617"}
         org.clojure/core.memoize {:mvn/version "0.7.1"}
-        #_{:git/url "http://github.com/clojure/core.memoize"
-           :sha "32d9957724e629222a1037b9048692c72d571085"}
         instaparse {:mvn/version "1.4.8"}
-        #_{:git/url "https://github.com/Engelberg/instaparse"
-           :sha "60a70404bc6fb91ec7b048502847d73420533ecd"}}
+        org.clojure/tools.cli {:mvn/version "0.3.5"}}
  :aliases
  {:clj
   {:extra-deps
    {cheshire {:mvn/version "5.8.0"}
-    #_{:git/url "http://github.com/dakrone/cheshire"
-       :sha "b30a4797a7c27a215edd0b03ce13459e502577eb"}
     net.thisptr/jackson-jq {:mvn/version "0.0.8"}
-    com.bhauman/rebel-readline {:mvn/version "0.1.1"}
-    #_{:git/url "https://github.com/bhauman/rebel-readline"
-       :sha "cbc6536bbd5768494dba8d86380e758dceba1481"}
-    org.clojure/tools.cli {:mvn/version "0.3.5"}
-    #_{:git/url "https://github.com/clojure/tools.cli"
-       :sha "38c398fbff33351550fab7b7910e822495e472ba"}}}
+    com.bhauman/rebel-readline {:mvn/version "0.1.1"}}}
   :cljs
   {:extra-deps
    {cljsjs/nodejs-externs {:mvn/version "1.0.4-1"}
@@ -28,7 +16,8 @@
   {:extra-deps {olical/cljs-test-runner {:mvn/version "0.1.1"}}
    :main-opts ["-m" "cljs-test-runner.main"]}
   :test {:extra-paths ["test"]
-         :extra-deps {com.cognitect/test-runner {:git/url "http://github.com/cognitect-labs/test-runner.git"
-                                                 :sha "5fb4fc46ad0bf2e0ce45eba5b9117a2e89166479"}}
+         :extra-deps
+         {com.cognitect/test-runner {:git/url "http://github.com/cognitect-labs/test-runner.git"
+                                     :sha "5fb4fc46ad0bf2e0ce45eba5b9117a2e89166479"}}
          :main-opts ["-m" "cognitect.test-runner"]}
   :uberjar {:extra-paths ["target/custom"]}}}

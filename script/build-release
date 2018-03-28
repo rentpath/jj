@@ -4,7 +4,8 @@ set -e -u
 
 cd "$(dirname $0)/.."
 
-lein clean
+rm -rf out target
+mkdir -p out target
 
 CLI_ARTIFACT=./out/jj
 REPL_ARTIFACT=./target/custom/jj-repl.jar

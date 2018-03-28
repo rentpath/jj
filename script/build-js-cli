@@ -21,6 +21,6 @@ rm -rf out
 
 echo "--- Building jj CLI (on Node.js) ---"
 # Add separate ClojureScript source dir if needed
-java -cp $CLJS_JAR:`lein with-profile +cljs classpath` clojure.main build.clj
+java -cp $CLJS_JAR:`clojure -A:cljs -Spath` clojure.main build.clj
 chmod a+x out/jj
 echo "--- Finished building jj CLI (on Node.js) ---"
