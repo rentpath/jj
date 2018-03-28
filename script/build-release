@@ -7,7 +7,7 @@ cd "$(dirname $0)/.."
 lein clean
 
 CLI_ARTIFACT=./out/jj
-REPL_ARTIFACT=./target/uberjar/jj-repl.jar
+REPL_ARTIFACT=./target/custom/jj-repl.jar
 RELEASE_DIR=jj-release
 
 # Already tested in Travis CI
