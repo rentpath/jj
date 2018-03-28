@@ -1,16 +1,15 @@
 {:deps {org.clojure/clojure {:mvn/version "1.9.0"}
         org.clojure/core.memoize {:mvn/version "0.7.1"}
         instaparse {:mvn/version "1.4.8"}
-        org.clojure/tools.cli {:mvn/version "0.3.5"}}
+        org.clojure/tools.cli {:mvn/version "0.3.5"}
+        cheshire {:mvn/version "5.8.0"}
+        net.thisptr/jackson-jq {:mvn/version "0.0.8"}
+        com.bhauman/rebel-readline {:mvn/version "0.1.1"}}
  :aliases
- {:clj
+ {:cljs
   {:extra-deps
-   {cheshire {:mvn/version "5.8.0"}
-    net.thisptr/jackson-jq {:mvn/version "0.0.8"}
-    com.bhauman/rebel-readline {:mvn/version "0.1.1"}}}
-  :cljs
-  {:extra-deps
-   {cljsjs/nodejs-externs {:mvn/version "1.0.4-1"}
+   {org.clojure/clojurescript {:mvn/version "1.10.238"}
+    cljsjs/nodejs-externs {:mvn/version "1.0.4-1"}
     com.cognitect/transit-cljs {:mvn/version "0.8.243"}}}
   :cljs-test
   {:extra-deps {olical/cljs-test-runner {:mvn/version "0.1.1"}}

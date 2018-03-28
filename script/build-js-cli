@@ -4,23 +4,10 @@ set -e -u
 
 cd "$(dirname $0)/.."
 
-CLJS_JAR="${CLJS_JAR:-/usr/local/Cellar/clojurescript/1.9.946/libexec/cljs.jar}"
-
-if [[ -f "$CLJS_JAR" ]]
-then
-    echo "Found ClojureScript JAR locally, proceeding to build."
-else
-    echo "No ClojureScript JAR found. Fetching..."
-    mkdir -p ./target
-    curl -L 'https://github.com/clojure/clojurescript/releases/download/r1.10.238/cljs.jar' -o ./target/cljs.jar
-    CLJS_JAR="./target/cljs.jar"
-fi
-
-# Clean up
 rm -rf out
+mkdir out
 
 echo "--- Building jj CLI (on Node.js) ---"
-# Add separate ClojureScript source dir if needed
-java -cp $CLJS_JAR:`clojure -A:cljs -Spath` clojure.main build.clj
+clojure -A:cljs -m cljs.main -t node -O advanced -o out/jj -c com.rentpath.jj.cli
 chmod a+x out/jj
 echo "--- Finished building jj CLI (on Node.js) ---"

@@ -243,7 +243,7 @@ System requirements:
 
 - JDK
 - Node.js
-- Leiningen
+- Clojure [CLI tools](https://clojure.org/guides/deps_and_cli)
 
 To understand the code base:
 
@@ -256,15 +256,31 @@ Main libraries used:
 - [rebel-readline](https://github.com/bhauman/rebel-readline)
 - [cheshire](https://github.com/dakrone/cheshire)
 
+### REPLs
+
+**Clojure**
+
+Editor/IDE integration of your choice or use Clojure's CLI tools directly (here with [rebel-readline](https://github.com/bhauman/rebel-readline) added):
+
+```
+clojure -Sdeps "{:deps {com.bhauman/rebel-readline {:mvn/version \"0.1.1\"}}}" -m rebel-readline.main
+```
+
+**ClojureScript**
+
+```
+clj -A:cljs -m cljs.main -re node
+```
+
 ### Tests
 
-Clojure:
+**Clojure**
 
 ```
-clj -A:clj:test
+clj -A:test
 ```
 
-ClojureScript:
+**ClojureScript***
 
 ```
 clj -A:cljs:cljs-test
@@ -273,7 +289,7 @@ clj -A:cljs:cljs-test
 ## Todos
 
 - [ ] Rust implementation for CLI.
-- [ ] Testing via ClojureScript
+- [x] ~~Test setup via ClojureScript~~
 - [x] ~~Flesh out CLI args, starting with ability to specify reserved symbol sets (e.g., for Elasticsearch)~~
 - [x] ~~Incorporate [jackson-jq](https://github.com/eiiches/jackson-jq) for richer REPL experience~~
 - [ ] Fully support multi-line input at REPL

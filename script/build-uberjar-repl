@@ -9,19 +9,19 @@ echo "Setting up directories..."
 rm -rf target/custom
 mkdir -p target/custom/classes
 echo "Unpacking dependency JARs..."
-for jar in `clojure -A:clj:uberjar -Spath | awk 'BEGIN { RS = ":" } /\.jar/ { print $0 }'`
+for jar in `clojure -A:uberjar -Spath | awk 'BEGIN { RS = ":" } /\.jar/ { print $0 }'`
 do
     unzip -uoq $jar -d target/custom/classes
 done
 
 echo "Copying local directories on classpath..."
-for dir in `clojure -A:clj:uberjar -Spath | awk 'BEGIN { RS = ":" } /target\/custom/ { next } /^\s*[^\/]/ { print $0 }'`
+for dir in `clojure -A:uberjar -Spath | awk 'BEGIN { RS = ":" } /target\/custom/ { next } /^\s*[^\/]/ { print $0 }'`
 do
     cp -f -R $dir target/custom/classes/
 done
 
 echo "Compiling main Clojure namespace to a Java class..."
-clojure -A:clj:uberjar -e "(binding [*compile-path* \"target/custom/classes\"] (compile 'com.rentpath.jj.repl))"
+clojure -A:uberjar -e "(binding [*compile-path* \"target/custom/classes\"] (compile 'com.rentpath.jj.repl))"
 
 echo "Creating executable JAR file..."
 cd target/custom/classes
