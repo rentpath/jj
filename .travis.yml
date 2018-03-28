@@ -9,7 +9,6 @@ script:
   - clojure -A:clj:test
   - clojure -A:cljs:cljs-test
 before_deploy:
-  - clojure -Sverbose
   - ./script/build-release
 deploy:
   provider: releases
