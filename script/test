@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e -u
+
+cd "$(dirname $0)/.."
+
+clj -A:test
