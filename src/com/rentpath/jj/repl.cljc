@@ -18,6 +18,8 @@
 
 (def newlines (atom 0))
 
+(defn exit [status] (System/exit status))
+
 (defn skip-if-eol
   "If the next character on stream s is a newline, skips it, otherwise
   leaves the stream untouched. Returns :line-start, :stream-end, or :body
@@ -41,20 +43,27 @@
 
       (= c -1)
       (do
-        (println "You pressed Ctrl-D, didn't you?\nTry jj/quit next time.")
-        (flush)
-        (System/exit 0))
+        (if (empty? output)
+          (do (println "You pressed Ctrl-D, didn't you?\nTry jj/quit next time.")
+              (flush)
+              (exit 0))
+          output))
 
       :else
       (recur (.read s) (str output (char c))))))
 
+(declare handle-special-input)
 (defn read-def
   [raw-input]
   (let [sans-def (str/triml (subs raw-input 4))
-        [identifier expression] (->> sans-def
-                                     (split-with #(not (or (Character/isWhitespace %) (= % \,))))
-                                     (map (partial apply str)))]
-    [:jj/def (symbol identifier) (parse expression)]))
+        [identifier expression-str] (->> sans-def
+                                         (split-with #(not (or (Character/isWhitespace %) (= % \,))))
+                                         (map (partial apply str)))
+        expression (->> (java.io.ByteArrayInputStream. (.getBytes expression-str))
+                        read-entry
+                        str/trim
+                        handle-special-input)]
+    [:jj/def (symbol identifier) expression]))
 
 (def jj-program (atom ""))
 
@@ -65,7 +74,7 @@
     (do
       (println "You're right, you should be writing Clojure.")
       (flush)
-      (System/exit 0))
+      (exit 0))
 
     (= raw-input "jj/reset")
     (do
@@ -90,9 +99,10 @@
     (let [raw-json (subs raw-input 6)
           str-length (count raw-json)
           stripped (subs (subs raw-json 1) 0 (- str-length 2))
-          s  (if (str/starts-with? stripped "http")
+          s  (try
                (slurp stripped)
-               (str/replace stripped "\\\"" "\""))]
+               (catch Exception _
+                 (str/replace stripped "\\\"" "\"")))]
       (json/parse-string s))
 
     :else raw-input))

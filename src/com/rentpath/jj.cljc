@@ -9,11 +9,11 @@
 
 (defn eval-jj
   [forms]
-  (if (every? map? forms)
-    (apply deep-merge forms)
-    (if (= 1 (count forms))
-      (first forms)
-      forms)))
+  (cond
+    (map? forms) forms
+    (= 1 (count forms)) (first forms)
+    (every? map? forms) (apply deep-merge forms)
+    :else forms))
 
 (def jj (comp eval-jj parse))
 
