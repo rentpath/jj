@@ -9,8 +9,6 @@
   "
   jj = <WS*> jjValue (<WS*> jjValue <WS*>)* <WS*>
 
-  jj_ = <WS*> jjValue (<WS*> WITH <WS*> jjValue)* <WS*>
-
   <jjValue> = jjSymbol | jjNumber | jjString | jjObject | jjArray | jjFalse | jjNull | jjTrue | WITH
 
   jjTrue = 'true'
