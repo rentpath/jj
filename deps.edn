@@ -14,9 +14,15 @@
   :cljs-test
   {:extra-deps {olical/cljs-test-runner {:mvn/version "0.1.1"}}
    :main-opts ["-m" "cljs-test-runner.main"]}
-  :test {:extra-paths ["test"]
+  :test {:extra-paths ["test" "test-resources"]
          :extra-deps
-         {com.cognitect/test-runner {:git/url "http://github.com/cognitect-labs/test-runner.git"
-                                     :sha "5fb4fc46ad0bf2e0ce45eba5b9117a2e89166479"}}
-         :main-opts ["-m" "cognitect.test-runner"]}
+         {circleci/circleci.test {:mvn/version "0.4.1"}
+          cloverage {:mvn/version "1.0.10"}}
+         :main-opts ["-m" "cloverage.coverage"
+                     "--runner" "circleci.test"
+                     "--ns-regex" ".*\\.jj.*"
+                     "--ns-exclude-regex" "clojure\\.core.*"
+                     "--src-ns-path" "src"
+                     "--test-ns-path" "test"
+                     "--fail-threshold" "95"]}
   :uberjar {:extra-paths ["target/custom"]}}}
