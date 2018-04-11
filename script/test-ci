@@ -4,4 +4,4 @@ set -e -u
 
 cd "$(dirname $0)/.."
 
-clojure -A:test
+clojure -A:test:test-ci

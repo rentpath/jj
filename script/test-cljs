@@ -4,4 +4,4 @@ set -e -u
 
 cd "$(dirname $0)/.."
 
-clj -A:cljs:cljs-test
+clojure -A:cljs:cljs-test

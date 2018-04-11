@@ -25,4 +25,12 @@
                      "--src-ns-path" "src"
                      "--test-ns-path" "test"
                      "--fail-threshold" "95"]}
+  :test-ci {:main-opts ["-m" "cloverage.coverage"
+                        "--runner" "circleci.test"
+                        "--ns-regex" ".*\\.jj.*"
+                        "--ns-exclude-regex" "clojure\\.core.*"
+                        "--src-ns-path" "src"
+                        "--test-ns-path" "test"
+                        "--fail-threshold" "95"
+                        "--no-html"]}
   :uberjar {:extra-paths ["target/custom"]}}}
